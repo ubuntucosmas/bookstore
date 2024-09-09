@@ -1,6 +1,6 @@
 # Install Python if not already installed
-apt-get update
-apt-get install -y python3 python3-pip
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
 
 
 $ pip install -r requirements.txt
