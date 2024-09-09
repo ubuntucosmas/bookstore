@@ -1,0 +1,44 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}
+Basket Summary
+{% endblock %}
+
+
+{% block content %}
+ 
+
+    <!-- Basket Summary -->
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Your Basket</h2>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for item in basket %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ item.product.title }}  <!-- Render the product name -->
+                        <span>${{ item.price }} x {{ item.quantity }}</span>  <!-- Render price and quantity -->
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">Your basket is empty.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card-footer">
+            <p class="mb-0">Total Quantity: {{ basket.get_total_qty }}</p>  <!-- Total Quantity -->
+            <p class="mb-0">Total Price: ${{ basket.get_total_price }}</p>  <!-- Total Price -->
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+
+
+{% endblock %}

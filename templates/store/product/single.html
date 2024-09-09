@@ -1,0 +1,77 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <main class="pt-5">
+        <div class="row g-3">
+            <div class="col-md-5 col-lg-5 order-md-first bg-light">
+                <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}">
+            </div>
+            <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
+                <h1 class="mb-0 h4">{{ product.title }}</h1>
+                <p><span class="lead">{{ product.author }}</span> (Author)</p>
+                <p>{{ product.description|slice:":355" }}...</p>
+                <div class="border">
+                    <div class="col border-bottom">
+                        <div class="row p-3">
+                            <div class="col-6">Hardback</div>
+                            <div class="col-6 text-end"><span class="h4 fw-bold">£{{ product.price }}</span></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row p-3">
+                            <div class="col-6">
+                                <label for="quantity-select">Qty</label>
+                                <select id="quantity-select">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button type="button" id="add-button" data-product-id="{{ product.id }}" class="btn btn-secondary btn-sm">Add to Basket</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#add-button').click(function() {
+            var productId = $(this).data('product-id');
+            var quantity = $('#quantity-select').val();
+
+            $.ajax({
+                url: '{% url "basket:add_to_basket" %}',  // URL of the Django view handling the add-to-basket logic
+                type: 'POST',
+                data: {
+                    'productid': productId,
+                    'quantity': quantity,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                   // alert(response.basket_item_count);  // Optionally display a message
+
+                    // Update the basket item count if it's part of the response
+                    if (response.basket_item_count !== undefined) {
+                        $('#basket-item-count').text(response.basket_item_count);  // Update the badge
+                        }
+                },
+
+                error: function(xhr, errmsg, err) {
+                    console.error('Error:', errmsg);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
