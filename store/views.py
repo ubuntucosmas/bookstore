@@ -15,7 +15,7 @@ def all_products(request):
     return render(request, 'store/home.html', context)
 
 def product_detail(request, slug):
-    trending = Product.objects.get(title="Nike")
+    trending = Product.objects.filter(title="Nike").first()
 
     popular = Product.objects.filter(price=388).first()
     soon = Product.objects.filter(slug="t-shirt").first()
