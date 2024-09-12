@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .basket import Basket  # Import your Basket class
@@ -33,31 +33,21 @@ def basket_summary_view(request):
     context = {
         'basket': basket,
     }
+    trending = Product.objects.get(title="Nike")
+    popular = Product.objects.get(price=388)
+    soon = Product.objects.get(slug="t-shirt")
+
+    context = {'basket': basket,'trending':trending,'popular':popular,'soon':soon}
     return render(request, './store/basket/basket_summary.html', context)
 
 
-# def basket_add(request):
-#     if request.method == 'POST':
-#         basket = Basket(request)
-#         product_id = int(request.POST.get('productid'))
-#         product_qty = int(request.POST.get('productqty'))
-#         product = get_object_or_404(Product, id=product_id)
-#         basket = request.session.get('basket', {})
-#         #basket.add(product=product, qty=product_qty)
-#         if product_id in basket:
-#             basket[product_id]['product_qty'] += product_qty
-#         else:
-#             basket[product_id] = {
-#                 'name': product.name,
-#                 'price': str(product.price),  # Ensure price is a string if DecimalField
-#                 'product_qty': product_qty,
-#             }
+def basket_remove(request, product_id):
+    basket = Basket(request)
+    product = get_object_or_404(Product, id=product_id)
+    basket.remove(product)
+    return redirect('basket:view_basket')  # Redirect to the basket page
 
-#         # Save the updated basket in the session
-#         request.session['basket'] = basket
-
-#         return JsonResponse({'status': 'success', 'message': 'Product added to basket!'})
-#     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
-
-#         # response = JsonResponse({'qty':product_qty})
-#         # return HttpResponse(status=400)
+def basket_clear(request):
+    basket = Basket(request)
+    basket.clear()
+    return redirect('basket:view_basket')  # Redirect back to the basket page

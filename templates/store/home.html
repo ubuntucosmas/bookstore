@@ -6,6 +6,7 @@
 
 <main>
 
+
     <!-- Start Banner Hero -->
     <div
       id="template-mo-zay-hero-carousel"
@@ -32,20 +33,14 @@
           <div class="container">
             <div class="row p-5">
               <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                <img
-                  class="img-fluid"
-                  src="/media/images/books3.png"
-                  alt=""
-                />
+                <img class="img-fluid" alt="Responsive image" src="{{ trending.image.url }}">
               </div>
               <div class="col-lg-6 mb-0 d-flex align-items-center">
                 <div class="text-align-left align-self-center">
-                  <h1 class="h1 text-success"><b>DripStore</b> eCommerce</h1>
-                  <h3 class="h2">Street Looks poulor</h3>
-                  <p>
-                    Zay Shop is an eCommerce HTML5 CSS template with latest
-                    version of Bootstrap 5 (beta 1). This template is 100% free
-                    provided by
+                  <h1 class="h1 products-name text-success"><b>DripStore</b> eCommerce</h1>
+                  <h3 class="h2 products-name">Street Looks poulor</h3>
+                  <p class="details fw-bold text-muted">
+                    Unveil a new dimension of style with our cutting-edge wearables, designed for the modern trendsetter who values both flair and functionality
                     <a
                       rel="sponsored"
                       class="text-success"
@@ -86,19 +81,14 @@
           <div class="container">
             <div class="row p-5">
               <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                <img
-                  class="img-fluid"
-                  src="/media/images/books.jpg"
-                  alt=""
-                />
+                <img class="img-fluid" alt="Responsive image" src="{{ popular.image.url }}">
               </div>
               <div class="col-lg-6 mb-0 d-flex align-items-center">
                 <div class="text-align-left">
-                  <h1 class="h1">Proident occaecat</h1>
-                  <h3 class="h2">Aliquip ex ea commodo consequat</h3>
-                  <p>
-                    You are permitted to use this Zay CSS template for your
-                    commercial websites. You are
+                  <h1 class="h1 products-name">Proident occaecat</h1>
+                  <h3 class="h2 products-name">Aliquip ex ea commodo consequat</h3>
+                  <p class="details">
+                    Your destination for sleek, trendsetting wearables that blend innovation with style, empowering you to redefine your wardrobe effortlessly
                     <strong>not permitted</strong> to re-distribute the template
                     ZIP file in any kind of template collection websites.
                   </p>
@@ -111,17 +101,13 @@
           <div class="container">
             <div class="row p-5">
               <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                <img
-                  class="img-fluid"
-                  src="/media/images/books.jpg"
-                  alt=""
-                />
+                <img class="img-fluid" alt="Responsive image" src="{{ soon.image.url }}">
               </div>
               <div class="col-lg-6 mb-0 d-flex align-items-center">
                 <div class="text-align-left">
-                  <h1 class="h1">Repr in voluptate</h1>
-                  <h3 class="h2">Ullamco laboris nisi ut</h3>
-                  <p>
+                  <h1 class="h1 products-name">Repr in voluptate</h1>
+                  <h3 class="h2 products-name">Ullamco laboris nisi ut</h3>
+                  <p class="details">
                     We bring you 100% free CSS templates for your websites. If
                     you wish to support TemplateMo, please make a small
                     contribution via PayPal or tell your friends about our
@@ -155,25 +141,28 @@
   <div class="album py-5 bg-light">
     <div class="container">
 
-      <div class="pb-3 h5">All Books</div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+      <div class="pb-3 h5">Available Products</div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
         {% for product in products %}
 
         <div class="col">
-          <div class="card shadow-sm">
-            <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
+          <div class="card shadow-lg p-1 rounded">
+            <div class="zoom-container">
+              <img class="img-fluid zoom-img" alt="Responsive image" src="{{ product.image.url }}">
+            </div>
+            
             <div class="card-body">
-              <p class="card-text">
-                <a class="text-dark text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+              <p class="card-text mb-1">
+                <a class="products-name text-dark text-decoration-none" style href="{{ product.get_absolute_url }}">{{ product.title }}</a>
               </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">9min read</small>
-              </div>
+              <p class="details text-muted">{{product.description}}</p>
+              <h6 class="card-subtitle mb-2 text-muted">${{product.price}}</h6>
+    
+              <a href="{{ product.get_absolute_url }}" class="btn btn-success">Buy Now</a>
             </div>
           </div>
         </div>
-
         {% endfor %}
 
       </div>
@@ -181,6 +170,14 @@
   </div>
 
 
-</main>
 
+
+
+
+  {% comment %} <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> {% endcomment %}
+  <!------ Include the above in your HEAD tag ---------->
+  
+  
 {% endblock %}

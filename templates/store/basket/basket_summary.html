@@ -14,6 +14,10 @@ Basket Summary
     <div class="card">
         <div class="card-header">
             <h2 class="mb-0">Your Basket</h2>
+            <form action="{% url 'basket:basket_clear' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Clear Basket</button>
+            </form>
         </div>
         <div class="card-body">
             <ul class="list-group">
@@ -21,6 +25,10 @@ Basket Summary
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{ item.product.title }}  <!-- Render the product name -->
                         <span>${{ item.price }} x {{ item.quantity }}</span>  <!-- Render price and quantity -->
+                        <form action="{% url 'basket:remove' item.product.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
                     </li>
                 {% empty %}
                     <li class="list-group-item">Your basket is empty.</li>
