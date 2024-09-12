@@ -33,9 +33,9 @@ def basket_summary_view(request):
     context = {
         'basket': basket,
     }
-    trending = Product.objects.get(title="Nike")
-    popular = Product.objects.get(price=388)
-    soon = Product.objects.get(slug="t-shirt")
+    trending = Product.objects.filter(title="Nike").first()
+    popular = Product.objects.filter(price=388).first()
+    soon = Product.objects.filter(slug="t-shirt").first()
 
     context = {'basket': basket,'trending':trending,'popular':popular,'soon':soon}
     return render(request, './store/basket/basket_summary.html', context)
